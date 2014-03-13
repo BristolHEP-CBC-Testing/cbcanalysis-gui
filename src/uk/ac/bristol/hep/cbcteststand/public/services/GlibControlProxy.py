@@ -1,3 +1,5 @@
+#!/usr/local/bin/python
+
 """
 @author Mark Grimes (mark.grimes@bristol.ac.uk)
 @date 13/Mar/2014 (rewritten for CORS from a file written on 17/Jan/2014)
@@ -7,6 +9,7 @@ import socket, os, sys, time
 # ------------------------------------
 # --- Important behaviour settings ---
 # ------------------------------------
+INSTALLATION_PATH="/home/phmag/CMSSW_5_3_4/src/SLHCUpgradeTracker/CBCAnalysis" # Need to find a way so that this is not hardcoded 
 logging=True      # Whether to dump debugging information to a log.
 serverScriptListeningAddress="/tmp/CBCTestStand_rpc_server"  # The socket address that the receiving script listens on
 serverScript=INSTALLATION_PATH+"/gui/serverProcess/GlibControlService.py" # The script that will answer my requests
@@ -150,13 +153,14 @@ try :
 		# This is probably a CORS preflight request. If I want to allow cross-site access (usually
 		# only for testing) then I need to make the appropriate response. If I don't want to allow
 		# it, then ignore the request.
-		if( allowCrossSiteAccess ) respondToCORSPreflight()
-	elif os.environ['REQUEST_METHOD']=='GET' :
+		if( allowCrossSiteAccess ) : respondToCORSPreflight()
+	elif os.environ['REQUEST_METHOD']=='POST' :
 		# This is presumably a normal json-rpc request. I first need to make sure the server script
 		# is listening on the socket, then pass the message on to that.
 		socket=openServerSocket( serverScriptListeningAddress, serverScript )
-		if logging=True : relayRequest( socket, allowCrossSiteAccess, logToFile="/tmp/CBCTestStand_rpc_server" )
-		else relayRequest( socket, allowCrossSiteAccess )
+		if logging==True : relayRequest( socket, allowCrossSiteAccess, logToFile="/tmp/CBCTestStand_rpc_server" )
+		else : relayRequest( socket, allowCrossSiteAccess )
+	else : raise RuntimeError( "No code in place to handle a '"+os.environ['REQUEST_METHOD']+"' request")
 except KeyError as error :
 	# A required header wasn't sent with the request. I should probably think about giving a more
 	# instructive message at some point in the future.
