@@ -16,5 +16,4 @@
 <stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-war WebContent/VAADIN/widgetsets uk.ac.bristol.hep.cbcteststand.CBCTestStandWidgetSet -startupUrl uk.ac.bristol.hep.cbcteststand.CBCTestStandWidgetSet/index.html -bindAddress 127.0.0.1"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="CBCTestStand"/>
 <stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Xmx512M -XX:MaxPermSize=256M"/>
-<stringAttribute key="org.eclipse.jdt.launching.WORKING_DIRECTORY" value="/Users/phmag/Documents/EclipseWorkspaces/CBCTestStand"/>
 </launchConfiguration>
