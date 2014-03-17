@@ -5,11 +5,10 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class I2CRegistersPanel implements TestStandPanel
 {
-	private HorizontalPanel mainPanel_;
+	private HorizontalPanel mainPanel_=new HorizontalPanel();
 	
 	public I2CRegistersPanel()
 	{
-		mainPanel_=new HorizontalPanel();
 	}
 
 	@Override
@@ -17,17 +16,4 @@ public class I2CRegistersPanel implements TestStandPanel
 	{
 		return mainPanel_;
 	}
-
-	@Override
-	public String name()
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public static String staticName()
-	{
-		return "I2C Registers Panel";
-	}
-	
 }

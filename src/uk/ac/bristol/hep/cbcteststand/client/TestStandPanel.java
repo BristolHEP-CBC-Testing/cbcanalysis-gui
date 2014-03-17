@@ -15,7 +15,4 @@ public interface TestStandPanel
 {
 	/** @brief Returns the main panel, which already encompasses all of the UI elements. */
 	public Widget panel();
-	
-	/** @brief The name of the panel, as it will appear in the list on the main page. */
-	public String name();
 }
