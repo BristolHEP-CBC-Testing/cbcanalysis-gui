@@ -10,7 +10,7 @@ import socket, os, sys, time
 # --- Important behaviour settings ---
 # ------------------------------------
 INSTALLATION_PATH="/home/phmag/CMSSW_5_3_4/src/SLHCUpgradeTracker/CBCAnalysis" # Need to find a way so that this is not hardcoded 
-logging=True      # Whether to dump debugging information to a log.
+logging=False      # Whether to dump debugging information to a log.
 serverScriptListeningAddress="/tmp/CBCTestStand_rpc_server"  # The socket address that the receiving script listens on
 serverScript=INSTALLATION_PATH+"/gui/serverProcess/GlibControlService.py" # The script that will answer my requests
 allowCrossSiteAccess=False
@@ -158,7 +158,7 @@ try :
 		# This is presumably a normal json-rpc request. I first need to make sure the server script
 		# is listening on the socket, then pass the message on to that.
 		socket=openServerSocket( serverScriptListeningAddress, serverScript )
-		if logging==True : relayRequest( socket, allowCrossSiteAccess, logToFile="/tmp/CBCTestStand_rpc_server" )
+		if logging==True : relayRequest( socket, allowCrossSiteAccess, logToFile="/tmp/proxyCommunication.log" )
 		else : relayRequest( socket, allowCrossSiteAccess )
 	else : raise RuntimeError( "No code in place to handle a '"+os.environ['REQUEST_METHOD']+"' request")
 except KeyError as error :
