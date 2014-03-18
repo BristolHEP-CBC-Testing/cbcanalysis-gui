@@ -157,9 +157,9 @@ try :
 	elif os.environ['REQUEST_METHOD']=='POST' :
 		# This is presumably a normal json-rpc request. I first need to make sure the server script
 		# is listening on the socket, then pass the message on to that.
-		socket=openServerSocket( serverScriptListeningAddress, serverScript )
-		if logging==True : relayRequest( socket, allowCrossSiteAccess, logToFile="/tmp/proxyCommunication.log" )
-		else : relayRequest( socket, allowCrossSiteAccess )
+		serverSocket=openServerSocket( serverScriptListeningAddress, serverScript )
+		if logging==True : relayRequest( serverSocket, allowCrossSiteAccess, logToFile="/tmp/proxyCommunication.log" )
+		else : relayRequest( serverSocket, allowCrossSiteAccess )
 	else : raise RuntimeError( "No code in place to handle a '"+os.environ['REQUEST_METHOD']+"' request")
 except KeyError as error :
 	# A required header wasn't sent with the request. I should probably think about giving a more
