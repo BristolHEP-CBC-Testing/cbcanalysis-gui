@@ -1,24 +1,58 @@
 /** Add css rules here for your application. */
 
+#Loading {
+	position: fixed;
+	left: 0px;
+	top: 0px;
+	width: 100%;
+	height: 100%;
+	z-index: 9999;
+}
+
 .titleStyle {
    font-size: 200%;
    padding: 12px;
-   background-color: #FFFFFF;
+   background-color: #E0FFFF;
 }
 
 .selectedAreaStyle {
    font-size: 100%;
    padding: 8px;
    background-color: #AACCFF;
+   font-weight: bolder;
 }
 
 .areaStyle {
    font-size: 100%;
    padding: 8px;
-   background-color: #FFFFFF;
+   background-color: #E0FFFF  ;
+}
+.areaStyle:hover {
+  font-weight: bolder;
+}
+
+.loadingBetween{
+	background-color:rgba(0,0,256,0.1);
+	text-align:center;
+	font-size: 200%;
+}
+
+.tableCell-green {
+	background: #008AB8;
+}
+
+.gridTitle {
+	font-size:150%;
+}
+
+.gridStyle {
+	font-size: 100%;
+	text-align: center;
 }
 
 /** Example rules used by the template application (remove for your app) */
+
+
 h1 {
   font-size: 2em;
   font-weight: bold;
@@ -33,6 +67,8 @@ h1 {
 }
 
 /** Most GWT widgets already have a style name defined */
+
+
 .gwt-DialogBox {
   width: 400px;
 }
@@ -46,6 +82,8 @@ h1 {
 }
 
 /** Set ids using widget.getElement().setId("idOfElement") */
+
+
 #closeButton {
   margin: 15px 6px 6px;
 }

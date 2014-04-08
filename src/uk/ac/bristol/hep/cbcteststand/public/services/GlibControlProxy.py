@@ -9,7 +9,7 @@ import socket, os, sys, time
 # ------------------------------------
 # --- Important behaviour settings ---
 # ------------------------------------
-INSTALLATION_PATH="/home/phmag/CMSSW_5_3_4/src/SLHCUpgradeTracker/CBCAnalysis" # Need to find a way so that this is not hardcoded 
+INSTALLATION_PATH="/home/xtaldaq/CBCAnalyzer/CMSSW_5_3_4/src/SLHCUpgradeTracker/CBCAnalysis" # Need to find a way so that this is not hardcoded 
 logging=False      # Whether to dump debugging information to a log.
 serverScriptListeningAddress="/tmp/CBCTestStand_rpc_server"  # The socket address that the receiving script listens on
 serverScript=INSTALLATION_PATH+"/gui/serverProcess/GlibControlService.py" # The script that will answer my requests
