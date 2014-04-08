@@ -5,8 +5,11 @@
 	<!--inherits name="com.vaadin.DefaultWidgetSet" /-->
 	<inherits name='com.google.gwtjsonrpc.GWTJSONRPC'/>
 	
+	<inherits name="org.fusesource.restygwt.RestyGWT"/>
+	
 	<!-- The entry-point for the client-side application -->
     <entry-point class="uk.ac.bristol.hep.cbcteststand.client.ProgramEntryPoint"/>
+    
 	
     <!--
      Uncomment the following to compile the widgetset for one browser only.
