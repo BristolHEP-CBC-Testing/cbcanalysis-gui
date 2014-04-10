@@ -1,101 +1,68 @@
 package uk.ac.bristol.hep.cbcteststand.client;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.ButtonBase;
 import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Label;
 
 public class OccupancyCheckView{ 
 	
-	private Grid occupancyGrid = new Grid(17,17);
+	private Grid occupancyGrid;
 	private Map<String, Label> resultLabels = new HashMap<String, Label>();
 	private Map<String, Grid> resultGrids = new HashMap<String, Grid>();  
 	
-	private Map<String, Map<String, Integer>> OuterTest = new HashMap<String, Map<String, Integer>>();
-	private Map<String, Integer> InnerTest = new HashMap<String, Integer>();
-
-	
-	public OccupancyCheckView(String titleLabel){
+	public void createResultGrid(String gridName){
 		
-		InnerTest.put("FrontEndControl", 1);
-		InnerTest.put("VCth", 2);
-		OuterTest.put("FE0CBC0", InnerTest);
-		OuterTest.put("FE0CBC1", InnerTest);
-		
-		createResultGrid(titleLabel);
-		clearResults();
-		
-		for (String outerkey : OuterTest.keySet()){
-				Map<String, Integer> test = OuterTest.get(outerkey);
-				addResult(outerkey, test);	
-		}
-	}
-	
-	private void createResultGrid(String gridName){
+		occupancyGrid = new Grid(17,17);
 		Label title = new Label();
+		
 		title.setText(gridName); 
-		title.setStyleName("gridTitle"); //style this
+		title.setStyleName("gridTitle"); //TODO style this
 		
 		for (int index=1;  index < occupancyGrid.getColumnCount(); index++){
 			occupancyGrid.setWidget(0, index, new HTML("Cx"+Integer.toHexString(index-1)));
 		}
 		
 		for (int index=1;  index < occupancyGrid.getRowCount(); index++){
-			occupancyGrid.setWidget(index, 0, new HTML("Cx"+Integer.toHexString(index-1)));
+			occupancyGrid.setWidget(index, 0, new HTML("C"+Integer.toHexString(index-1)+"x"));
 		}
 		
 		resultLabels.put(gridName, title);
 		resultGrids.put(gridName, occupancyGrid);
 	}
 	
-	private void clearResults(){
+	
+	public void clearResults(){
 		for (String name : resultGrids.keySet()){
-			Grid grid = resultGrids.get(name);
+			Grid clearGrid = resultGrids.get(name);
 			
-			for (int column=1;  column < grid.getColumnCount(); column++){
+			for (int column=1;  column < clearGrid.getColumnCount(); column++){
 			
-				for (int row=1;  row < grid.getRowCount(); row++){
-					
+				for (int row=1;  row < clearGrid.getRowCount(); row++){
 					HTML test = new HTML("x");
-					grid.setWidget(row, column, test);
-					grid.setStyleName("gridStyle");
+					clearGrid.setWidget(row, column, test);
+					clearGrid.setStyleName("gridStyle"); 
 				}	
 			}
 		}	
 	}
 	
-	private void addResult(String cbcName, Map<String, Integer> occupancies){ //.values().toArray()
-		//need error message here
-		if (occupancies == null) addError(cbcName);
+	public void addResult(Grid occupanyGrid_, List<Integer> occupancies){ 
 		
-		try{
-			//occupancyGrid = resultGrids.get(cbcName);
-		}
-		catch (Throwable NameError){
-			//createResultGrid(cbcName);
-			//occupancyGrid = resultGrids.get(cbcName);
-		}
+		int row = 1;
+		int column = 1;
 			
-		for (String registerValues : occupancies.keySet()){
+		for (int index = 0; index<occupancies.size(); index++){
 			
-			Integer ovalue = InnerTest.get(registerValues);
+			occupanyGrid_.setWidget(row, column, new HTML(String.valueOf(occupancies.get(index))));
 			
+			if (occupancies.get(index)==0){occupanyGrid_.getCellFormatter().setStyleName(row, column, "tableCell-green");} //TODO
 			
-			int red = (int) (255.0*(1-ovalue));
-			int green = (int) (255.0*(1-ovalue));
-			int blue = 0;
+			else {occupanyGrid_.getCellFormatter().setStyleName(row, column, "tableCell-red");}
 			
-			int row = 1;
-			int column = 1;
-			
-			occupancyGrid.setWidget(row, column, new HTML(ovalue.toString()));
-			occupancyGrid.getCellFormatter().setStyleName(row, column, "tableCell-green");
-			//Window.alert( row.toString());
 			column+= 1;
 			if (column%17 == 0){
 				column=1;
@@ -105,20 +72,8 @@ public class OccupancyCheckView{
 		
 	}
 	
-	private void addError (String cbcName){ //TODO need to work on this
-		
-		try{
-			resultLabels.get(cbcName).setText("Server Error");;
-		}
-		catch (Throwable NameError) { //need to do more error checking here
-			createResultGrid(cbcName);
-			resultLabels.get(cbcName).setText(NameError.toString());;
-		}
-		
-	}
 
 	public Grid getOccupancyGrid() {
-		
 		return occupancyGrid;
 	}
 	
@@ -130,5 +85,9 @@ public class OccupancyCheckView{
 	public Map<String, Grid> getResultGrids() {
 		return resultGrids;
 	}	
+	
+	public Grid getSpecificGrid(String name){
+		return resultGrids.get(name);
+	}
 	
 }

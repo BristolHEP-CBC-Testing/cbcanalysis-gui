@@ -21,9 +21,17 @@ public interface GlibControlService extends RestService {
 		@POST
 	 	public void rpcService(rpcMessage parameters, MethodCallback<rpcResponse> callback ); //generic class handles all callbacks which have a container
 	 	
+	 	
+	 	//data from following two methods have custom responses
 	 	@Produces("application/json")
 		@POST
-	    public void connectedCBCService(rpcMessage parameters, MethodCallback<cbcNamesResponse> methodCallback ); //the only method that doesn't receive data in a container from the server
+	    public void connectedCBCService(rpcMessage parameters, MethodCallback<cbcNamesResponse> methodCallback ); 
+	 	
+	 	@Produces("application/json")
+		@POST
+	    public void getOccupanciesService(rpcMessage parameters, MethodCallback<getOccupanciesResponse> methodCallback ); 
+	 	
+	 	//message sent via JSON-RPC parsed as a class
 	 	
 	 	public class rpcMessage {
 	 		  String jsonrpc = "2.0";
@@ -50,7 +58,7 @@ public interface GlibControlService extends RestService {
 	 	public class rpcResponse {
 
 	 	    private int id;
-	 	    private Map<String, Map<String, Integer>> result;
+	 	    private Map<String, Map<String, Integer>> result;//{CBCName {Register, Value
 	 	    private String error;
 
 	 	    public int getId() {
@@ -97,6 +105,38 @@ public interface GlibControlService extends RestService {
 	 	    }
 
 	 	    public void setResult(List<String> result) {
+	 	        this.result = result;
+	 	    }
+
+	 	    public String getError() {
+	 	        return error;
+	 	    }
+
+	 	    public void setError(String error) {
+	 	        this.error = error;
+	 	    }
+
+	 	}
+	 	
+	 	public class getOccupanciesResponse {
+
+	 	    private int id;
+	 	    private Map<String, List<Integer>> result;//{CBCName [value, value, value...
+	 	    private String error;
+
+	 	    public int getId() {
+	 	        return id;
+	 	    }
+
+	 	    public void setId(int id) {
+	 	        this.id = id;
+	 	    }
+
+	 	    public Map<String, List<Integer>> getResult() {
+	 	        return result;
+	 	    }
+
+	 	    public void setResult(Map<String, List<Integer>> result) {
 	 	        this.result = result;
 	 	    }
 
